@@ -38,23 +38,35 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class BasicOpModeV1 extends OpMode {
 
     DcMotor wheel1, wheel2;
-    double power = 0;
+    double power = 50;
+    float errorMargin = 0.1f;
 
     @Override
     public void init() {
         wheel1 = hardwareMap.dcMotor.get("wheel1");
         wheel2 = hardwareMap.dcMotor.get("wheel2");
+
+        gamepad1.setJoystickDeadzone(errorMargin);
+        gamepad2.setJoystickDeadzone(errorMargin);
     }
 
     @Override
     public void loop() {
+        //wheel controls (basic movement)
+        double scale1 = 0,scale2 = 0;
+        if (gamepad1.left_stick_y != 0) {
+            scale1 = (gamepad1.left_stick_y > 0) ? 1f : -1f;
+        }else{
+            scale1 = 0;
+        }
+        wheel1.setPower(power * scale1);
 
-        wheel1.setPower(power);
-        wheel2.setPower(power);
-
-        if(gamepad1.a)
-            power = 50;
-        else
-            power = 0;
+        if (gamepad1.right_stick_y != 0) {
+            scale2 = (gamepad1.right_stick_y > 0) ? -1f : 1f;
+        } else{
+            scale2 = 0;
+        }
+        wheel2.setPower(power * scale2);
     }
+
 }

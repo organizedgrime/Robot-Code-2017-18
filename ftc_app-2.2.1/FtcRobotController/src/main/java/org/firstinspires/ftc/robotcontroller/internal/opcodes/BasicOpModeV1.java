@@ -34,38 +34,37 @@ package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class BasicOpModeV1 extends OpMode {
 
     DcMotor wheel1, wheel2;
-    double power = 50;
     float errorMargin = 0.1f;
+    final double[] speeds = new double[] {0.1, 0.3, 0.5, 0.7, 0.9};
+    int speedIndex = 3;
 
     @Override
     public void init() {
         // Get the hardware from the robot configuration
         wheel1 = hardwareMap.dcMotor.get("wheel1");
         wheel2 = hardwareMap.dcMotor.get("wheel2");
+        wheel1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Set the deadzone, which prevents it from activating too close to the center
-        gamepad1.setJoystickDeadzone(errorMargin);
-        gamepad2.setJoystickDeadzone(errorMargin);
+        //gamepad1.setJoystickDeadzone(errorMargin);
+        //gamepad2.setJoystickDeadzone(errorMargin);
     }
 
     @Override
     public void loop() {
         //wheel controls (basic movement)
+        wheel1.setPower(speeds[speedIndex] * gamepad1.right_stick_y);
+        wheel2.setPower(speeds[speedIndex] * gamepad1.left_stick_y);
 
-        //Scales determine whether to move the motors forwards or backwards
-        double scale1, scale2;
-
-        // Set scales based on whether or not the joystick is moving forwards or backwards
-        // Then set the power, modifying by the corresponding scale
-        scale1 = (gamepad1.left_stick_y != 0) ? ((gamepad1.left_stick_y > 0) ? 1f : -1f) : 0;
-        wheel1.setPower(power * scale1);
-
-        scale2 = (gamepad1.right_stick_y != 0) ? ((gamepad1.right_stick_y > 0) ? -1f : 1f) : 0;
-        wheel2.setPower(power * scale2);
+        if(gamepad1.left_bumper && speedIndex > 0)
+            speedIndex--;
+        else if(gamepad1.right_bumper && speedIndex < speeds.length-1)
+            speedIndex++;
     }
 
 }

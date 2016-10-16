@@ -40,8 +40,9 @@ public class BasicOpModeV1 extends OpMode {
 
     DcMotor wheel1, wheel2;
     float errorMargin = 0.1f;
-    final double[] speeds = new double[] {0.1, 0.3, 0.5, 0.7, 0.9};
-    int speedIndex = 3;
+    final double[] speeds = new double[] {0.3, 0.8};
+    int speedIndex = 1;
+    boolean lastPressed = false;
 
     @Override
     public void init() {
@@ -61,10 +62,14 @@ public class BasicOpModeV1 extends OpMode {
         wheel1.setPower(speeds[speedIndex] * gamepad1.right_stick_y);
         wheel2.setPower(speeds[speedIndex] * gamepad1.left_stick_y);
 
-        if(gamepad1.left_bumper && speedIndex > 0)
+        if(gamepad1.left_bumper && speedIndex > 0 && !lastPressed) {
             speedIndex--;
-        else if(gamepad1.right_bumper && speedIndex < speeds.length-1)
+        }
+        else if(gamepad1.right_bumper && speedIndex < speeds.length-1 && !lastPressed) {
             speedIndex++;
+        }
+
+        lastPressed = gamepad1.left_bumper || gamepad1.right_bumper;
     }
 
 }

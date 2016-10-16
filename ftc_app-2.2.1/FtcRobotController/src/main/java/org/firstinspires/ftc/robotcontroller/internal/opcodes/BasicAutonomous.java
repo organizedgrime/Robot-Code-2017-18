@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 @Disabled
 public class BasicAutonomous extends LinearOpMode {
 
-    HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    HardwarePushbot robot = new HardwarePushbot();   // Use a Pushbot's hardware
 
     static final double APPROACH_SPEED  = 0.5;
 
@@ -38,9 +38,5 @@ public class BasicAutonomous extends LinearOpMode {
         // Stop all motors
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
-    }
-
-    void driveDistance(double cm){
-
     }
 }

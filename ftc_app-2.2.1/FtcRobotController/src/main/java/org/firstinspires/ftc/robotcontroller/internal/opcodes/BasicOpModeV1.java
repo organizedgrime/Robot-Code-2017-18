@@ -43,9 +43,11 @@ public class BasicOpModeV1 extends OpMode {
 
     @Override
     public void init() {
+        // Get the hardware from the robot configuration
         wheel1 = hardwareMap.dcMotor.get("wheel1");
         wheel2 = hardwareMap.dcMotor.get("wheel2");
 
+        // Set the deadzone, which prevents it from activating too close to the center
         gamepad1.setJoystickDeadzone(errorMargin);
         gamepad2.setJoystickDeadzone(errorMargin);
     }
@@ -53,19 +55,16 @@ public class BasicOpModeV1 extends OpMode {
     @Override
     public void loop() {
         //wheel controls (basic movement)
-        double scale1 = 0,scale2 = 0;
-        if (gamepad1.left_stick_y != 0) {
-            scale1 = (gamepad1.left_stick_y > 0) ? 1f : -1f;
-        }else{
-            scale1 = 0;
-        }
+
+        //Scales determine whether to move the motors forwards or backwards
+        double scale1, scale2;
+
+        // Set scales based on whether or not the joystick is moving forwards or backwards
+        // Then set the power, modifying by the corresponding scale
+        scale1 = (gamepad1.left_stick_y != 0) ? ((gamepad1.left_stick_y > 0) ? 1f : -1f) : 0;
         wheel1.setPower(power * scale1);
 
-        if (gamepad1.right_stick_y != 0) {
-            scale2 = (gamepad1.right_stick_y > 0) ? -1f : 1f;
-        } else{
-            scale2 = 0;
-        }
+        scale2 = (gamepad1.right_stick_y != 0) ? ((gamepad1.right_stick_y > 0) ? -1f : 1f) : 0;
         wheel2.setPower(power * scale2);
     }
 

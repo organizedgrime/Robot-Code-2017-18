@@ -31,11 +31,14 @@ public class BasicOpMode extends OpMode {
         wheel1.setPower(speeds[speedIndex] * gamepad1.right_stick_y);
         wheel2.setPower(speeds[speedIndex] * gamepad1.left_stick_y);
 
-        if(gamepad1.left_bumper && speedIndex > 0 && !lastPressed) {
-            speedIndex--;
-        }
-        else if(gamepad1.right_bumper && speedIndex < speeds.length-1 && !lastPressed) {
-            speedIndex++;
+        try {
+            if (gamepad1.left_bumper && speedIndex > 0 && !lastPressed) {
+                speedIndex--;
+            } else if (gamepad1.right_bumper && speedIndex < speeds.length - 1 && !lastPressed) {
+                speedIndex++;
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            speedIndex = 1;
         }
 
         lastPressed = gamepad1.left_bumper || gamepad1.right_bumper;

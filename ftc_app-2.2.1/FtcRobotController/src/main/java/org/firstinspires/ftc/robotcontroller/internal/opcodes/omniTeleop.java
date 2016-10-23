@@ -7,44 +7,53 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class omniTeleop extends OpMode {
 
     DcMotor wFront, wBack, wLeft, wRight;
-    boolean forward = false, backward = false, left = false, right = false;
-    float errorMargin = 0.01f;
+    final double[] speeds = new double[]{0.3, 0.8};
+    int speedIndex = 0;
+    boolean lastPressed = false;
 
     @Override
     public void init() {
         // Get the hardware from the robot configuration
-        wFront = hardwareMap.dcMotor.get("wheel1");
-        wBack = hardwareMap.dcMotor.get("wheel2");
-        wLeft = hardwareMap.dcMotor.get("wheel3");
-        wRight = hardwareMap.dcMotor.get("wheel4");
+        wFront = hardwareMap.dcMotor.get("wFront");
+        wBack = hardwareMap.dcMotor.get("wBack");
+        wLeft = hardwareMap.dcMotor.get("wLeft");
+        wRight = hardwareMap.dcMotor.get("wRight");
 
-        wFront.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        //wFront.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
-        //wheel controls (basic movement)
 
-        wFront.setPower(gamepad1.left_stick_x);
-        wFront.setPower(-gamepad1.left_stick_x);// left/right
+        wFront.setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+        wBack.setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
 
-        wLeft.setPower(gamepad1.right_stick_y);// up/down
-        wRight.setPower(-gamepad1.right_stick_y);
+        wLeft.setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+        wRight.setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
 
-        while (gamepad1.left_trigger != 0) {//counter clockwise
-            wFront.setPower(0);
+        if (gamepad1.right_trigger != 0) {
+            wFront.setPower(gamepad1.right_trigger * speeds[speedIndex]);
+            wBack.setPower(gamepad1.right_trigger * speeds[speedIndex]);
+            wLeft.setPower(gamepad1.right_trigger * speeds[speedIndex]);
+            wRight.setPower(gamepad1.right_trigger * speeds[speedIndex]);
+        } else if (gamepad1.left_trigger != 0) {
+            wFront.setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+            wBack.setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+            wLeft.setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+            wRight.setPower(-gamepad1.left_trigger * speeds[speedIndex]);
         }
-    }
 
-    public void updateDirection() {
+        try {
+            if (gamepad1.left_bumper && !lastPressed) {
+                speedIndex--;
+            } else if (gamepad1.right_bumper && !lastPressed) {
+                speedIndex++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            speedIndex = 1;
+        }
 
-        forward = gamepad1.right_stick_y > errorMargin;
-        backward = gamepad1.right_stick_y < -errorMargin;
-
-        right = gamepad1.right_stick_x>errorMargin;
-        left= gamepad1.right_stick_x<-errorMargin;
-
+        lastPressed = gamepad1.left_bumper || gamepad1.right_bumper;
     }
 }
 

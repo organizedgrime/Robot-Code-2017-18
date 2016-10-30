@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicAutonomous;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicOpMode;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.MotorTester;
+import org.firstinspires.ftc.robotcontroller.internal.opcodes.Sense;
 
 public class FtcOpModeRegister implements OpModeRegister {
 
@@ -27,5 +28,6 @@ public class FtcOpModeRegister implements OpModeRegister {
         manager.register("BasicOpMode", BasicOpMode.class);
         manager.register("BasicAutonomous", BasicAutonomous.class);
         manager.register("MotorTester", MotorTester.class);
+        manager.register("Sense", Sense.class);
     }
 }

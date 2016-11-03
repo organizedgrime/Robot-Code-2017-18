@@ -36,41 +36,30 @@ public class omniTeleop extends OpMode {
     @Override
     public void loop() {
 
-        motors[0].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
-        motors[1].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+        //move forwards
+        motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
+        motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
 
-        motors[2].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
-        motors[3].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
+        //move backwards
+        motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+        motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
 
-        if (gamepad1.right_trigger != 0) {
+        //rotation
+        if (gamepad1.right_trigger != 0) {//rotate right
             for(DcMotor motor : motors)
-                motors[0].setPower(speeds[speedIndex]);
-        } else if (gamepad1.left_trigger != 0) {
+                motor.setPower(gamepad1.right_trigger*speeds[speedIndex]);
+        } else if (gamepad1.left_trigger != 0) {//rotate left
             for(DcMotor motor : motors)
-                motors[1].setPower(-speeds[speedIndex]);
+                motor.setPower(-gamepad1.right_trigger*speeds[speedIndex]);
         }
 
-        try {
-            if (gamepad1.left_bumper && !lastPressed) {
-                speedIndex--;
-            } else if (gamepad1.right_bumper && !lastPressed) {
-                speedIndex++;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            speedIndex = 1;
+        if (gamepad1.left_bumper && !lastPressed && speedIndex>0) {
+            speedIndex--;
+        } else if (gamepad1.right_bumper && !lastPressed && speedIndex < speeds.length-1) {
+            speedIndex++;
         }
 
         lastPressed = gamepad1.left_bumper || gamepad1.right_bumper;
-
-        telemetry.addData("accuracy", "Accuracy: "+accuracyString);
-
-        if(data != null) {
-            for (int i = 0; i < data.length; i++) {
-                telemetry.addData("data"+i, "Value " + i + ": " + data[i]);
-            }
-        } else {
-            telemetry.addData("data", "No Data");
-        }
     }
 }
 

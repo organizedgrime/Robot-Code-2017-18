@@ -7,41 +7,61 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import java.util.List;
+import java.text.DecimalFormat;
 
 public class Sense extends OpMode implements SensorEventListener {
     Context context;
     SensorManager mSensorManager;
-    List<Sensor> sensors;
-    Sensor mRotVec;
+    Sensor mAccelerometer;
     volatile String accuracyString;
     volatile float[] data;
-    double[] accumulator = new double[3];
-
+    double[] velocityAccumulator = {0, 0, 0};
+    double[] posAccumulator = {0, 0, 0};
+    double[] accelMax = {Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE};
+    long last_time;
 
     @Override
     public void init() {
         context = hardwareMap.appContext;
         mSensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
         //get a list of all of the sensors available
-        sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        //get a reference to the default Rotation Vector
-        mRotVec = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+    }
 
-        mSensorManager.registerListener(this, mRotVec, SensorManager.SENSOR_DELAY_FASTEST);
+    public static double round(double val, int digits){
+        final double dig = Math.pow(10, digits);
+        return Math.round(val*dig)/dig;
+    }
+
+    public static double round(double val, int digits, int base){
+        final double dig = Math.pow(base, digits);
+        return Math.round(val*dig)/dig;
     }
 
     @Override
     public void loop() {
+        final long this_time = System.currentTimeMillis();
+        final double dif = (this_time - last_time) * 0.001;
+        last_time = this_time;
+
         telemetry.addData("accuracy", "Accuracy: "+accuracyString);
 
         if(data != null) {
             for (int i = 0; i < data.length; i++) {
-                telemetry.addData("data"+i, "Value " + i + ": " + data[i]);
+                if(data[i] > accelMax[i])
+                    accelMax[i] = data[i];
+
+                final double curdata = round(data[i], 0);
+                velocityAccumulator[i] += curdata * dif;
+                posAccumulator[i] += velocityAccumulator[i] * dif + curdata * Math.pow(dif, 2);
+
+                telemetry.addData("acceleration"+i, "Value " + i + ": " + round(data[i], 3));
+
+                telemetry.addData("velocity"+i, "Value " + i + ": " + round(velocityAccumulator[i], 3));
+                telemetry.addData("pos"+i, "Value " + i + ": " + round(posAccumulator[i], 3));
             }
         } else {
             telemetry.addData("data", "No Data");

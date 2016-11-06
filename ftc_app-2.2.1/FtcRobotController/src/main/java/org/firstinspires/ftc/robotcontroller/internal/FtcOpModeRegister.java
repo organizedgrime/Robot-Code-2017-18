@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicAutonomous;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicOpMode;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.MotorTester;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.Sense;
+import org.firstinspires.ftc.robotcontroller.internal.opcodes.omniTeleop;
 
 public class FtcOpModeRegister implements OpModeRegister {
 
@@ -26,6 +27,7 @@ public class FtcOpModeRegister implements OpModeRegister {
          * Any manual OpMode class registrations should go here.
          */
         manager.register("BasicOpMode", BasicOpMode.class);
+        manager.register("OmniTeleOpMode", omniTeleop.class);
         manager.register("BasicAutonomous", BasicAutonomous.class);
         manager.register("MotorTester", MotorTester.class);
         manager.register("Sense", Sense.class);

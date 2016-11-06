@@ -1,16 +1,7 @@
 package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import java.util.List;
 
 public class omniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
@@ -18,31 +9,17 @@ public class omniTeleop extends OpMode {
     int speedIndex = 0;
     boolean lastPressed = false;
 
-    Context context;
-    Sensor mRotVec;
-    volatile String accuracyString;
-    volatile float[] data;
-
-
     @Override
     public void init() {
         // Get the hardware from the robot configuration
-        motors[0] = hardwareMap.dcMotor.get("wFront");
-        motors[1] = hardwareMap.dcMotor.get("wBack");
-        motors[2] = hardwareMap.dcMotor.get("wLeft");
-        motors[3] = hardwareMap.dcMotor.get("wRight");
+        motors[0] = hardwareMap.dcMotor.get("wheel0");
+        motors[1] = hardwareMap.dcMotor.get("wheel1");
+        motors[2] = hardwareMap.dcMotor.get("wheel3");
+        motors[3] = hardwareMap.dcMotor.get("wheel2");
     }
 
     @Override
     public void loop() {
-
-        //move forwards
-        motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
-        motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
-
-        //move backwards
-        motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
-        motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
 
         //rotation
         if (gamepad1.right_trigger != 0) {//rotate right
@@ -50,7 +27,16 @@ public class omniTeleop extends OpMode {
                 motor.setPower(gamepad1.right_trigger*speeds[speedIndex]);
         } else if (gamepad1.left_trigger != 0) {//rotate left
             for(DcMotor motor : motors)
-                motor.setPower(-gamepad1.right_trigger*speeds[speedIndex]);
+                motor.setPower(-gamepad1.left_trigger*speeds[speedIndex]);
+        }
+        else {
+            //move forwards
+            motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+
+            //move backwards
+            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed && speedIndex>0) {

@@ -2,20 +2,30 @@ package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class omniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
+
+    DcMotor reeler;
+    Servo latch;
+    boolean servoState = false;
+
     final double[] speeds = new double[]{0.3, 0.8};
     int speedIndex = 0;
-    boolean lastPressed = false;
+
+    boolean[] lastPressed = new boolean[]{false, false};
 
     @Override
     public void init() {
         // Get the hardware from the robot configuration
         motors[0] = hardwareMap.dcMotor.get("wheel0");
         motors[1] = hardwareMap.dcMotor.get("wheel1");
-        motors[2] = hardwareMap.dcMotor.get("wheel3");
-        motors[3] = hardwareMap.dcMotor.get("wheel2");
+        motors[2] = hardwareMap.dcMotor.get("wheel2");
+        motors[3] = hardwareMap.dcMotor.get("wheel3");
+
+        reeler = hardwareMap.dcMotor.get("reeler");
+        latch = hardwareMap.servo.get("latch");
     }
 
     @Override
@@ -39,13 +49,28 @@ public class omniTeleop extends OpMode {
             motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
-        if (gamepad1.left_bumper && !lastPressed && speedIndex>0) {
+        if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {
             speedIndex--;
-        } else if (gamepad1.right_bumper && !lastPressed && speedIndex < speeds.length-1) {
+        } else if (gamepad1.right_bumper && !lastPressed[0] && speedIndex < speeds.length-1) {
             speedIndex++;
         }
 
-        lastPressed = gamepad1.left_bumper || gamepad1.right_bumper;
+        // DPad for launcher
+        if(gamepad2.dpad_down) {
+            reeler.setPower(.3);
+        }
+        else if(gamepad2.dpad_up) {
+            reeler.setPower(-.3);
+        }
+
+        // Servo controller
+        if(gamepad2.a && !lastPressed[1]) {
+            latch.setPosition(servoState ? 1 : 0);
+            servoState ^= true;
+        }
+
+        lastPressed[0] = gamepad1.left_bumper || gamepad1.right_bumper;
+        lastPressed[1] = gamepad2.a;
     }
 }
 

@@ -2,13 +2,14 @@ package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class omniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
 
     DcMotor reeler;
-    Servo latch;
+    Servo latch, flipper;
     boolean servoState = false;
 
     final double[] speeds = new double[]{0.3, 0.8};
@@ -26,6 +27,8 @@ public class omniTeleop extends OpMode {
 
         reeler = hardwareMap.dcMotor.get("reeler");
         latch = hardwareMap.servo.get("latch");
+
+        flipper = hardwareMap.servo.get("flipper");
     }
 
     @Override
@@ -56,11 +59,14 @@ public class omniTeleop extends OpMode {
         }
 
         // DPad for launcher
-        if(gamepad2.dpad_down) {
+        if(gamepad2.dpad_up) {
             reeler.setPower(.3);
         }
-        else if(gamepad2.dpad_up) {
+        else if(gamepad2.dpad_down) {
             reeler.setPower(-.3);
+        }
+        else {
+            reeler.setPower(0);
         }
 
         // Servo controller
@@ -68,7 +74,11 @@ public class omniTeleop extends OpMode {
             latch.setPosition(servoState ? 1 : 0);
             servoState ^= true;
         }
-
+        if (gamepad2.left_bumper) {
+            flipper.setPosition(1);
+        }else{
+            flipper.setPosition(0);
+        }
         lastPressed[0] = gamepad1.left_bumper || gamepad1.right_bumper;
         lastPressed[1] = gamepad2.a;
     }

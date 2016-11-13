@@ -26,6 +26,7 @@ public class FtcOpModeRegister implements OpModeRegister {
         /*
          * Any manual OpMode class registrations should go here.
          */
+        manager.register("Autonomous", BasicAutonomous.class);
         manager.register("BasicOpMode", BasicOpMode.class);
         manager.register("OmniTeleOpMode", omniTeleop.class);
         manager.register("BasicAutonomous", BasicAutonomous.class);

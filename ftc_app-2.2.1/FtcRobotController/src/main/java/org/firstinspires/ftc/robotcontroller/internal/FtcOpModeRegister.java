@@ -4,12 +4,12 @@ import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.AnnotatedOpModeRegistrar;
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
+
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicAutonomous;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicOpMode;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.MotorTester;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.Sense;
-import org.firstinspires.ftc.robotcontroller.internal.opcodes.omniTeleop;
+import org.firstinspires.ftc.robotcontroller.internal.opcodes.OmniTeleop;
 
 public class FtcOpModeRegister implements OpModeRegister {
 
@@ -28,7 +28,7 @@ public class FtcOpModeRegister implements OpModeRegister {
          */
         manager.register("Autonomous", BasicAutonomous.class);
         manager.register("BasicOpMode", BasicOpMode.class);
-        manager.register("OmniTeleOpMode", omniTeleop.class);
+        manager.register("OmniTeleOpMode", OmniTeleop.class);
         manager.register("BasicAutonomous", BasicAutonomous.class);
         manager.register("MotorTester", MotorTester.class);
         manager.register("Sense", Sense.class);

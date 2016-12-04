@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class omniTeleop extends OpMode {
+public class OmniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
 
     DcMotor reeler;
@@ -27,6 +27,7 @@ public class omniTeleop extends OpMode {
 
         reeler = hardwareMap.dcMotor.get("reeler");
         latch = hardwareMap.servo.get("latch");
+        latch.setPosition(.5);
 
         flipper = hardwareMap.servo.get("flipper");
     }
@@ -71,7 +72,7 @@ public class omniTeleop extends OpMode {
 
         // Servo controller
         if(gamepad2.a && !lastPressed[1]) {
-            latch.setPosition(servoState ? 1 : 0);
+            latch.setPosition(servoState ? .5 : -.5);
             servoState ^= true;
         }
         if (gamepad2.left_bumper) {

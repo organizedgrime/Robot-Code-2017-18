@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
-import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcontroller.internal.MusicPlayer;
 
 public class OmniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];

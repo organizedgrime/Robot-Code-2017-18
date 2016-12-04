@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
+import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcontroller.internal.MusicPlayer;
 
 public class OmniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
@@ -13,6 +15,8 @@ public class OmniTeleop extends OpMode {
     boolean servoState = false;
 
     final double[] speeds = new double[]{0.3, 0.8};
+    final double reelSpeed = 1.0;
+
     int speedIndex = 0;
 
     boolean[] lastPressed = new boolean[]{false, false};
@@ -61,10 +65,10 @@ public class OmniTeleop extends OpMode {
 
         // DPad for launcher
         if(gamepad2.dpad_up) {
-            reeler.setPower(.3);
+            reeler.setPower(reelSpeed);
         }
         else if(gamepad2.dpad_down) {
-            reeler.setPower(-.3);
+            reeler.setPower(-reelSpeed);
         }
         else {
             reeler.setPower(0);
@@ -75,7 +79,7 @@ public class OmniTeleop extends OpMode {
             latch.setPosition(servoState ? .5 : -.5);
             servoState ^= true;
         }
-        if (gamepad2.left_bumper) {
+        if (gamepad2.b) {
             flipper.setPosition(1);
         }else{
             flipper.setPosition(0);

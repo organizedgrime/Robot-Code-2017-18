@@ -15,7 +15,6 @@ public class OmniTeleop extends OpMode {
     final double reelSpeed = 1.0;
 
     int speedIndex = 0;
-    int direction = 0;
 
     boolean[] lastPressed = new boolean[]{false, false};
 
@@ -47,32 +46,18 @@ public class OmniTeleop extends OpMode {
         }
         else {
             //move forwards
-            motors[(0 + direction) % 4].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
-            motors[(1 + direction) % 4].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
 
             //move backwards
-            motors[(2 + direction) % 4].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
-            motors[(3 + direction) % 4].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {
             speedIndex--;
         } else if (gamepad1.right_bumper && !lastPressed[0] && speedIndex < speeds.length-1) {
             speedIndex++;
-        }
-
-        // DPad for direction
-        if(gamepad1.dpad_up) {
-            direction = 0;
-        }
-        else if(gamepad1.dpad_down) {
-            direction = 1;
-        }
-        else if(gamepad1.dpad_left) {
-            direction = 2;
-        }
-        else if(gamepad1.dpad_right) {
-            direction = 3;
         }
 
         // DPad for launcher
@@ -100,4 +85,3 @@ public class OmniTeleop extends OpMode {
         lastPressed[1] = gamepad2.a;
     }
 }
-

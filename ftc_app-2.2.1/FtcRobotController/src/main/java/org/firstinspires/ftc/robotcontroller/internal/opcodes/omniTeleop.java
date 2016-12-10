@@ -5,17 +5,21 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OmniTeleop extends OpMode {
+    // Array of wheels on the physical robot
     DcMotor[] motors = new DcMotor[4];
 
+    // Motors and servos not directly related to omnidirectional movement
     DcMotor reeler;
     Servo latch, flipper;
-    boolean servoState = false;
 
+    // Speeds
     final double[] speeds = new double[]{0.3, 0.8};
     final double reelSpeed = 1.0;
 
     int speedIndex = 0, direction = 0;
 
+    // States
+    boolean servoState = false;
     boolean[] lastPressed = new boolean[]{false, false};
 
     @Override
@@ -36,14 +40,19 @@ public class OmniTeleop extends OpMode {
     @Override
     public void loop() {
 
-        //rotation
-        if (gamepad1.right_trigger != 0) {//rotate right
+
+        //region Wheel Movement
+        // Rotate right
+        if (gamepad1.right_trigger != 0) {
             for(DcMotor motor : motors)
                 motor.setPower(gamepad1.right_trigger*speeds[speedIndex]);
-        } else if (gamepad1.left_trigger != 0) {//rotate left
+        }
+        // Rotate left
+        else if (gamepad1.left_trigger != 0) {
             for(DcMotor motor : motors)
                 motor.setPower(-gamepad1.left_trigger*speeds[speedIndex]);
         }
+        // Move at specific angle
         else {
             //move forwards
             motors[(0 + direction) % 4].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
@@ -59,7 +68,9 @@ public class OmniTeleop extends OpMode {
         } else if (gamepad1.right_bumper && !lastPressed[0] && speedIndex < speeds.length-1) {
             speedIndex++;
         }
+        //endregion
 
+        //region DPad
         // DPad for direction
         if(gamepad1.dpad_up) {
             direction = 0;
@@ -84,17 +95,25 @@ public class OmniTeleop extends OpMode {
         else {
             reeler.setPower(0);
         }
+        //endregion
 
+        //region Servo Movement
         // Servo controller
         if(gamepad2.a && !lastPressed[1]) {
             latch.setPosition(servoState ? .5 : -.5);
+            // Update servo state
             servoState ^= true;
         }
+
+        // Only flip the flipper when b is pressed, else revert to original state.
         if (gamepad2.b) {
             flipper.setPosition(1);
         }else{
             flipper.setPosition(0.25);
         }
+        //endregion
+
+        // Update states
         lastPressed[0] = gamepad1.left_bumper || gamepad1.right_bumper;
         lastPressed[1] = gamepad2.a;
     }

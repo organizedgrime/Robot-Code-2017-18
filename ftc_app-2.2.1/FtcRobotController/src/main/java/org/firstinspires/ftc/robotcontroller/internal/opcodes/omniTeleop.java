@@ -44,62 +44,58 @@ public class OmniTeleop extends OpMode {
         //region Wheel Movement
         // Rotate right
         if (gamepad1.right_trigger != 0) {
-            for(DcMotor motor : motors)
-                motor.setPower(gamepad1.right_trigger*speeds[speedIndex]);
+            for (DcMotor motor : motors)
+                motor.setPower(gamepad1.right_trigger * speeds[speedIndex]);
         }
         // Rotate left
         else if (gamepad1.left_trigger != 0) {
-            for(DcMotor motor : motors)
-                motor.setPower(-gamepad1.left_trigger*speeds[speedIndex]);
+            for (DcMotor motor : motors)
+                motor.setPower(-gamepad1.left_trigger * speeds[speedIndex]);
         }
         // Move at specific angle
         else {
+            // TODO Add direction
             //move forwards
-            motors[(0 + direction) % 4].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
-            motors[(1 + direction) % 4].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
 
             //move backwards
-            motors[(2 + direction) % 4].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
-            motors[(3 + direction) % 4].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {
             speedIndex--;
-        } else if (gamepad1.right_bumper && !lastPressed[0] && speedIndex < speeds.length-1) {
+        } else if (gamepad1.right_bumper && !lastPressed[0] && speedIndex < speeds.length - 1) {
             speedIndex++;
         }
         //endregion
 
         //region DPad
         // DPad for direction
-        if(gamepad1.dpad_up) {
+        if (gamepad1.dpad_up) {
             direction = 0;
-        }
-        else if(gamepad1.dpad_down) {
+        } else if (gamepad1.dpad_down) {
             direction = 1;
-        }
-        else if(gamepad1.dpad_left) {
+        } else if (gamepad1.dpad_left) {
             direction = 2;
-        }
-        else if(gamepad1.dpad_right) {
+        } else if (gamepad1.dpad_right) {
             direction = 3;
         }
 
         // DPad for launcher
-        if(gamepad2.dpad_up) {
+        if (gamepad2.dpad_up) {
             reeler.setPower(reelSpeed);
-        }
-        else if(gamepad2.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             reeler.setPower(-reelSpeed);
-        }
-        else {
+        } else {
             reeler.setPower(0);
         }
         //endregion
 
         //region Servo Movement
         // Servo controller
-        if(gamepad2.a && !lastPressed[1]) {
+        if (gamepad2.a && !lastPressed[1]) {
             latch.setPosition(servoState ? .5 : -.5);
             // Update servo state
             servoState ^= true;
@@ -108,7 +104,7 @@ public class OmniTeleop extends OpMode {
         // Only flip the flipper when b is pressed, else revert to original state.
         if (gamepad2.b) {
             flipper.setPosition(1);
-        }else{
+        } else {
             flipper.setPosition(0.25);
         }
         //endregion

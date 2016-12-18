@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class MotorTester extends OpMode {
 
-    DcMotor motor;
-    int power;
+    private DcMotor motor;
+    private int power;
 
     @Override
     public void init() {

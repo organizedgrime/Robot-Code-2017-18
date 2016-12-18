@@ -13,10 +13,10 @@ public class OmniTeleop extends OpMode {
     Servo latch, flipper;
 
     // Speeds
-    final double[] speeds = new double[]{0.3, 0.8};
+    final double[] speeds = new double[]{0.3, 0.6, 1.0};
     final double reelSpeed = 1.0;
 
-    int speedIndex = 0, direction = 0;
+    int speedIndex = 2, direction = 0;
 
     // States
     boolean servoState = false;

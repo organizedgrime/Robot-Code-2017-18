@@ -9,8 +9,7 @@ public class OmniTeleop extends OpMode {
     DcMotor[] motors = new DcMotor[4];
 
     // Motors and servos not directly related to omnidirectional movement
-    DcMotor reeler;
-    Servo latch, flipper;
+    DcMotor spinner;
 
     // Speeds
     final double[] speeds = new double[]{0.3, 0.6, 1.0};
@@ -30,17 +29,11 @@ public class OmniTeleop extends OpMode {
         motors[2] = hardwareMap.dcMotor.get("wheel2");
         motors[3] = hardwareMap.dcMotor.get("wheel3");
 
-        reeler = hardwareMap.dcMotor.get("reeler");
-        latch = hardwareMap.servo.get("latch");
-        latch.setPosition(.5);
-
-        flipper = hardwareMap.servo.get("flipper");
+        spinner = hardwareMap.dcMotor.get("spinner");
     }
 
     @Override
     public void loop() {
-
-
         //region Wheel Movement
         // Rotate right
         if (gamepad1.right_trigger != 0) {
@@ -85,27 +78,11 @@ public class OmniTeleop extends OpMode {
 
         // DPad for launcher
         if (gamepad2.dpad_up) {
-            reeler.setPower(reelSpeed);
+            spinner.setPower(reelSpeed);
         } else if (gamepad2.dpad_down) {
-            reeler.setPower(-reelSpeed);
+            spinner.setPower(-reelSpeed);
         } else {
-            reeler.setPower(0);
-        }
-        //endregion
-
-        //region Servo Movement
-        // Servo controller
-        if (gamepad2.a && !lastPressed[1]) {
-            latch.setPosition(servoState ? .5 : -.5);
-            // Update servo state
-            servoState ^= true;
-        }
-
-        // Only flip the flipper when b is pressed, else revert to original state.
-        if (gamepad2.b) {
-            flipper.setPosition(1);
-        } else {
-            flipper.setPosition(0.25);
+            spinner.setPower(0);
         }
         //endregion
 

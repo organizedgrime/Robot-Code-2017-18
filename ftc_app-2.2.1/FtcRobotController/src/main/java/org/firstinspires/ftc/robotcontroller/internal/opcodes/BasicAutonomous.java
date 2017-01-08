@@ -11,9 +11,11 @@ public class BasicAutonomous extends LinearOpMode {
     private final double
             conversionRate = .6, // Power seconds per meter
             driveSpeed = 1, // Unaccounted for power
-            speedPower = getPower(driveSpeed); // Calculate power based on both variables
+            speedPower = getPower(driveSpeed),
+            wiggleTime = 250, // Calculate power based on both variable
+            wigglePower = .2;
 
-    private double[] turnPowerAccounting = new double[] {1, 1, 1, 1};
+//    private double[] turnPowerAccounting = new double[] {1, 1, 1, 1};
 
     private DcMotor[] motors = new DcMotor[4];
 
@@ -32,8 +34,25 @@ public class BasicAutonomous extends LinearOpMode {
 //        for(DcMotor motor : motors) {
 //            motor.setPower(.5);
 //        }
+        boolean[] zeroPow = new boolean[2];
+        for(int i=0;i<2;i++){
+            if(moveArr[i] == 0){
+                zeroPow[i] = true;
+            }
+        }
 
-        Thread.sleep((long)moveArr[2]);
+        boolean leftOrRight = false;
+        for(double i = 0; i < moveArr[2]; i+=wiggleTime){
+            int multiplier = (leftOrRight?1:-1);
+            for(int j = 0; j < 2; j++){
+                if(zeroPow[j]) {
+                    motors[j*2+1].setPower(multiplier*wigglePower);
+                    motors[(j*2+2)%4].setPower(-multiplier*wigglePower);
+                }
+            }
+            leftOrRight ^= true;
+            Thread.sleep((long)wiggleTime);
+        }
 
         for(DcMotor motor : motors) {
             motor.setPower(0);
@@ -67,20 +86,11 @@ public class BasicAutonomous extends LinearOpMode {
             idle();
         }
 
-        // Code to actually move robot
-        double n = 5000;
-
         //step 1: go forwards n distance
-        actionDrive(n, Math.PI/2);
+        actionDrive(5, Math.PI/2);
 
-        //step 2: shoot
-        //TODO
-
-        //step 3: drive remaining distance
-        //actionDrive(5-n, Math.PI/2);
-
-        //step 4+5
-        //actionDrive(Math.sqrt(2)*0.5, Math.PI/4);
+        //step 2: angled
+        actionDrive(Math.sqrt(2)*0.5, Math.PI/4);
 
         // Idle to auto ends
         while (opModeIsActive()) {

@@ -11,7 +11,7 @@ public class MotorTester extends OpMode {
     @Override
     public void init() {
         // Get the hardware from the robot configuration
-        motor = hardwareMap.dcMotor.get("motor1");
+        motor = hardwareMap.dcMotor.get("motorTEST");
     }
 
     @Override
@@ -23,6 +23,8 @@ public class MotorTester extends OpMode {
             power = -1;
         else
             power = 0;
+
+        motor.setPower(power);
     }
 
 }

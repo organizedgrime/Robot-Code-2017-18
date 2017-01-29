@@ -15,10 +15,9 @@ public class OmniTeleop extends OpMode {
     final double[] speeds = new double[]{0.3, 0.6, 1.0};
     final double reelSpeed = 1.0;
 
-    int speedIndex = 2, direction = 0;
+    int speedIndex = 2, direction = 1;
 
     // States
-    boolean servoState = false;
     boolean[] lastPressed = new boolean[]{false, false};
 
     @Override
@@ -49,12 +48,12 @@ public class OmniTeleop extends OpMode {
         else {
             // TODO Add direction
             //move forwards
-            motors[0].setPower(-gamepad1.left_stick_x * speeds[speedIndex]);
-            motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[0].setPower(-direction * gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[1].setPower(direction * gamepad1.left_stick_x * speeds[speedIndex]);
 
             //move backwards
-            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
-            motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[2].setPower(-direction * gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(direction * gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {
@@ -67,13 +66,9 @@ public class OmniTeleop extends OpMode {
         //region DPad
         // DPad for direction
         if (gamepad1.dpad_up) {
-            direction = 0;
+            direction = -1;
         } else if (gamepad1.dpad_down) {
             direction = 1;
-        } else if (gamepad1.dpad_left) {
-            direction = 2;
-        } else if (gamepad1.dpad_right) {
-            direction = 3;
         }
 
         // DPad for launcher

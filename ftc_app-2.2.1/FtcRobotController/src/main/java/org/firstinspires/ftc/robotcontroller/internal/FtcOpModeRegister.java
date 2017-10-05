@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.AnnotatedOpModeRegistrar;
 
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.BasicAutonomous;
+import org.firstinspires.ftc.robotcontroller.internal.opcodes.FxDTeleop;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.MotorTester;
 import org.firstinspires.ftc.robotcontroller.internal.opcodes.OmniTeleop;
 
@@ -25,7 +26,8 @@ class FtcOpModeRegister implements OpModeRegister {
          * Any manual OpMode class registrations should go here.
          */
         manager.register("Autonomous", BasicAutonomous.class);
-        manager.register("Teleop", OmniTeleop.class);
+        manager.register("OmniTeleop", OmniTeleop.class);
+        manager.register("Four Wheel Drive", FxDTeleop.class);
         manager.register("Motor Tester", MotorTester.class);
     }
 }

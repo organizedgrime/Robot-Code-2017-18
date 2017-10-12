@@ -31,19 +31,25 @@ public class FxDTeleop extends OpMode {
         if (gamepad1.right_trigger != 0) {
             motors[0].setPower(gamepad1.right_trigger * speeds[speedIndex]);
             motors[1].setPower(gamepad1.right_trigger * speeds[speedIndex]);
+
+            motors[2].setPower(gamepad1.right_trigger * speeds[speedIndex]);
+            motors[3].setPower(gamepad1.right_trigger * speeds[speedIndex]);
         }
         // Rotate left
         else if (gamepad1.left_trigger != 0) {
-            motors[1].setPower(gamepad1.left_trigger * speeds[speedIndex]);
-            motors[2].setPower(gamepad1.left_trigger * speeds[speedIndex]);
+            motors[2].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+            motors[3].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+
+            motors[0].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
+            motors[1].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
         }
         // Move at specific angle
         else {
-            motors[0].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
-            motors[1].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[0].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[1].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
 
-            motors[2].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
-            motors[3].setPower(gamepad1.left_stick_x * speeds[speedIndex]);
+            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {

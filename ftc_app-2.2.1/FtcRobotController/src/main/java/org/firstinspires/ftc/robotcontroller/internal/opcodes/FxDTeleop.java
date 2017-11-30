@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.robotcontroller.internal.opcodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class FxDTeleop extends OpMode {
     // Array of wheels on the physical robot
@@ -59,8 +61,41 @@ public class FxDTeleop extends OpMode {
         }
         //endregion
 
+        //region Lift Movement
+        float liftPower = 0.3f;
+        DcMotor lifter = hardwareMap.dcMotor.get("lifter");
+        if(gamepad2.left_trigger > 0.5) {
+            lifter.setPower(liftPower);
+        }
+        else if(gamepad2.right_trigger > 0.5) {
+            lifter.setPower(-liftPower);
+        }
+        else {
+            lifter.setPower(0);
+        }
+
+//        Servo grabber = hardwareMap.servo.get("grabber");
+//        if(gamepad2.a) {
+//            System.out.println("dude yea");
+//                grabber.setPosition(180);
+//        }
+//        else {
+//            grabber.setPosition(0);
+//        }
+        
+        float grabberPower = 1f;
+        CRServo grabber = hardwareMap.crservo.get("grabber");
+        if(gamepad2.a) {
+            // OPEN
+            grabber.setPower(grabberPower);
+        }
+        else {
+            // CLOSE
+            grabber.setPower(-grabberPower);
+        }
+        //endregion
+
         // Update states
         lastPressed[0] = gamepad1.left_bumper || gamepad1.right_bumper;
-        lastPressed[1] = gamepad2.a;
     }
 }

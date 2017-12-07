@@ -12,7 +12,7 @@ public class FxDTeleop extends OpMode {
     // Speeds
     final double[] speeds = new double[]{0.3, 0.6, 1.0};
 
-    int speedIndex = 2;
+    int speedIndex = 1;
 
     // States
     boolean[] lastPressed = new boolean[]{false, false};
@@ -45,13 +45,13 @@ public class FxDTeleop extends OpMode {
             motors[0].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
             motors[1].setPower(-gamepad1.left_trigger * speeds[speedIndex]);
         }
-        // Move at specific angle
+        // Move
         else {
-            motors[0].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
-            motors[1].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[0].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[1].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
 
-            motors[2].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
-            motors[3].setPower(-gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[2].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
+            motors[3].setPower(gamepad1.left_stick_y * speeds[speedIndex]);
         }
 
         if (gamepad1.left_bumper && !lastPressed[0] && speedIndex > 0) {
@@ -82,7 +82,7 @@ public class FxDTeleop extends OpMode {
 //        else {
 //            grabber.setPosition(0);
 //        }
-        
+
         float grabberPower = 1f;
         CRServo grabber = hardwareMap.crservo.get("grabber");
         if(gamepad2.a) {

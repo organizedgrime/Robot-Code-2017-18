@@ -17,8 +17,13 @@ public class FxDTeleop extends OpMode {
     // States
     boolean[] lastPressed = new boolean[]{false, false};
 
+    Servo grabber;
+
     @Override
     public void init() {
+        grabber = hardwareMap.servo.get("grabber");
+        grabber.setPosition(0);
+
         // Get the hardware from the robot configuration
         motors[0] = hardwareMap.dcMotor.get("Lwheel1");
         motors[1] = hardwareMap.dcMotor.get("Lwheel2");
@@ -74,25 +79,25 @@ public class FxDTeleop extends OpMode {
             lifter.setPower(0);
         }
 
-//        Servo grabber = hardwareMap.servo.get("grabber");
-//        if(gamepad2.a) {
-//            System.out.println("dude yea");
-//                grabber.setPosition(180);
-//        }
-//        else {
-//            grabber.setPosition(0);
-//        }
 
-        float grabberPower = 1f;
-        CRServo grabber = hardwareMap.crservo.get("grabber");
         if(gamepad2.a) {
-            // OPEN
-            grabber.setPower(grabberPower);
+            grabber.setPosition(0);
         }
         else {
-            // CLOSE
-            grabber.setPower(-grabberPower);
+            grabber.setPosition(0.5);
         }
+
+//        float grabberPower = 1f;
+//        CRServo grabber = hardwareMap.crservo.get("grabber");
+//        grabber.resetDeviceConfigurationForOpMode();
+//        if(gamepad2.a) {
+//            // OPEN
+//            grabber.setPower(grabberPower);
+//        }
+//        else {
+//            // CLOSE
+//            grabber.setPower(-grabberPower);
+//        }
         //endregion
 
         // Update states

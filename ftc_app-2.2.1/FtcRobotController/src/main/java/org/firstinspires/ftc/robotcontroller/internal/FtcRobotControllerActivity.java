@@ -197,10 +197,6 @@ public class FtcRobotControllerActivity extends Activity {
     super.onCreate(savedInstanceState);
     RobotLog.vv(TAG, "onCreate()");
 
-//    // Play internet moms
-//    MusicPlayer musicPlayer = new MusicPlayer-(R.raw.internet_moms, context);
-//    musicPlayer.play();
-
     receivedUsbAttachmentNotifications = new ConcurrentLinkedQueue<UsbDevice>();
     eventLoop = null;
 

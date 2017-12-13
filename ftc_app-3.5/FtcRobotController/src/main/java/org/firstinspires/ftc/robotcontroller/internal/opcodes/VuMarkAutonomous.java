@@ -33,7 +33,11 @@ public class VuMarkAutonomous extends LinearOpMode {
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         // The vuforia license key associated with my account, integral to making this run
-        parameters.vuforiaLicenseKey = "AUs9kcz/////AAAAGQeDRhkmj0/WiQORtLuDrh5CjBfSvO3fFFNoUA7wXZj/IMyuDZayVhaoEKhW7uoMTHfwJFcbR2l9zy9NafG99Drz8BvOrEECsZMvETlcwj4Om6J0XIJ+hptC4Fd3DFt3JjlBiUEqDfZFetsp4XH37oApEtJMTj5paJ8cautujhzH5SseO8evjuOVLLgRAOVKG59YtgTGtsSnB7VN5+HNYe7eBegvH3tgc9Lsr4g/J3nErjFxwNkoNgcKiCcVJH9JXPdOOdG9s+p3iU6d5CP92HfYYbE5pWZ6TkLrf1e1sH2eaQfyRjLXmbWV6nW6KW4+ZB/gtovnhfMRbKpN2LQmHY0FsBI7fo2mMzWbkaKbMj8P";
+        parameters.vuforiaLicenseKey = "AUs9kcz/////AAAAGQeDRhkmj0/WiQORtLuDrh5CjBfSvO3fFFNoUA7wXZj/IMyuDZayV" +
+                "haoEKhW7uoMTHfwJFcbR2l9zy9NafG99Drz8BvOrEECsZMvETlcwj4Om6J0XIJ+hptC4Fd3DFt3JjlBiUEqDfZFetsp4" +
+                "XH37oApEtJMTj5paJ8cautujhzH5SseO8evjuOVLLgRAOVKG59YtgTGtsSnB7VN5+HNYe7eBegvH3tgc9Lsr4g/J3nEr" +
+                "jFxwNkoNgcKiCcVJH9JXPdOOdG9s+p3iU6d5CP92HfYYbE5pWZ6TkLrf1e1sH2eaQfyRjLXmbWV6nW6KW4+ZB/gtovnh" +
+                "fMRbKpN2LQmHY0FsBI7fo2mMzWbkaKbMj8P";
 
         // Select which camera to use on the RobotController mounted phone
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;

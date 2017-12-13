@@ -51,7 +51,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * the identity of Vuforia VuMarks encountered on the field. The code is structured as
  * a LinearOpMode. It shares much structure with {@link ConceptVuforiaNavigation}; we do not here
  * duplicate the core Vuforia documentation found there, but rather instead focus on the
- * differences between the use of Vuforia for navigation vs VuMark identification.
+ * differences between the use of Vuforia for navigation vs VuMarkAutonomous identification.
  *
  * @see ConceptVuforiaNavigation
  * @see VuforiaLocalizer
@@ -65,11 +65,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Concept: VuMark Id", group ="Concept")
+@Autonomous(name="Concept: VuMarkAutonomous Id", group ="Concept")
 @Disabled
 public class ConceptVuMarkIdentification extends LinearOpMode {
 
-    public static final String TAG = "Vuforia VuMark Sample";
+    public static final String TAG = "Vuforia VuMarkAutonomous Sample";
 
     OpenGLMatrix lastLocation = null;
 
@@ -134,7 +134,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
             /**
              * See if any of the instances of {@link relicTemplate} are currently visible.
              * {@link RelicRecoveryVuMark} is an enum which can have the following values:
-             * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
+             * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMarkAutonomous is visible, something other than
              * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
              */
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -142,8 +142,8 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
 
                 /* Found an instance of the template. In the actual game, you will probably
                  * loop until this condition occurs, then move on to act accordingly depending
-                 * on which VuMark was visible. */
-                telemetry.addData("VuMark", "%s visible", vuMark);
+                 * on which VuMarkAutonomous was visible. */
+                telemetry.addData("VuMarkAutonomous", "%s visible", vuMark);
 
                 /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
                  * it is perhaps unlikely that you will actually need to act on this pose information, but
@@ -169,7 +169,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                 }
             }
             else {
-                telemetry.addData("VuMark", "not visible");
+                telemetry.addData("VuMarkAutonomous", "not visible");
             }
 
             telemetry.update();

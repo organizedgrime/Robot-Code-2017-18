@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.robotcontroller.internal.opcodes;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
+@TeleOp(name="OmniTeleop")
 public class OmniTeleop extends OpMode {
     // Array of wheels on the physical robot
     DcMotor[] motors = new DcMotor[4];

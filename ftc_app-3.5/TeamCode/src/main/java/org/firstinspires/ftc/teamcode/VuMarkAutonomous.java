@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.robotcontroller.internal.opcodes;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -12,8 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 
-@Autonomous(name="Concept: VuMarkAutonomous Id", group ="Concept")
-@Disabled
+@Autonomous(name="VuMark Identifier")
 public class VuMarkAutonomous extends LinearOpMode {
 
     private VuforiaLocalizer vuforia;

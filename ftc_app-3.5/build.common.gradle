@@ -21,7 +21,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
     signingConfigs {
@@ -36,7 +36,7 @@ android {
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 26
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with
@@ -73,13 +73,13 @@ android {
             // Disable debugging for release versions so it can be uploaded to Google Play.
             //debuggable true
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi", "armeabi-v7a", "x86"
             }
         }
         debug {
             debuggable true
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi", "armeabi-v7a", "x86"
             }
         }
     }

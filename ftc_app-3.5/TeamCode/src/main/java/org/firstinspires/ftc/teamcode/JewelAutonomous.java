@@ -33,7 +33,7 @@ public class JewelAutonomous extends LinearOpMode {
         waitForStart();
 
         // Start
-        jewelServo.setPosition(0);
+        //jewelServo.setPosition(0);
 
         boolean ballIsBlue = false;
 

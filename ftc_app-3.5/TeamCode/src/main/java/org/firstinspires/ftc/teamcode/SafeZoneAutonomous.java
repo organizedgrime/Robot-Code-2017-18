@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "Safe Zone Autonomous")
 public class SafeZoneAutonomous extends LinearOpMode {
@@ -14,6 +15,11 @@ public class SafeZoneAutonomous extends LinearOpMode {
         motors[2] = hardwareMap.dcMotor.get("Rwheel1");
         motors[3] = hardwareMap.dcMotor.get("Rwheel2");
 
+        DcMotor lifter = hardwareMap.dcMotor.get("lifter");
+
+        Servo grabber = hardwareMap.servo.get("grabber");
+        grabber.setPosition(0);
+
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
         waitForStart();
@@ -24,6 +30,16 @@ public class SafeZoneAutonomous extends LinearOpMode {
         motors[1].setPower(0);
         motors[2].setPower(0);
         motors[3].setPower(0);
+        lifter.setPower(0);
+        grabber.setPosition(0.5);
+
+        sleep(100);
+
+        lifter.setPower(-0.3f);
+
+        sleep(1000);
+
+        lifter.setPower(0);
 
         sleep(100);
 
@@ -38,5 +54,12 @@ public class SafeZoneAutonomous extends LinearOpMode {
         motors[1].setPower(0);
         motors[2].setPower(0);
         motors[3].setPower(0);
+
+        lifter.setPower(0.3f);
+
+        sleep(1000);
+
+        lifter.setPower(0);
+        grabber.setPosition(0);
     }
 }

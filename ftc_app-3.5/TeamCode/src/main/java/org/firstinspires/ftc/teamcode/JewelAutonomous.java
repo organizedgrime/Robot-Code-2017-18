@@ -11,10 +11,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous(name="JewelAutonomous")
 public class JewelAutonomous extends LinearOpMode {
     DcMotor[] motors = new DcMotor[4];
+    ColorSensor colorSensor;
 
     @Override public void runOpMode() {
         // Color sensor for determining the color of the balls
-        ColorSensor colorSensor = hardwareMap.colorSensor.get("colorsensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorsensor");
         colorSensor.enableLed(true);
         float[] hsvValues = {0f, 0f, 0f};
 
@@ -65,4 +66,14 @@ public class JewelAutonomous extends LinearOpMode {
         for(DcMotor m : motors)
             m.setPower(0);
     }
+
+    private void jewel(double timeout) {
+        if(colorSensor.blue() > 3) {
+
+        }
+        else {
+
+        }
+    }
+
 }

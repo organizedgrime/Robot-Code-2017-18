@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Four Wheel Drive")
-public class FxDTeleop extends OpMode {
+@TeleOp(name = "Flipper Arm Teleop")
+public class FlipperAmTeleop extends OpMode {
     // Array of wheels on the physical robot
     DcMotor[] motors = new DcMotor[4];
 
@@ -18,12 +18,15 @@ public class FxDTeleop extends OpMode {
     // States
     boolean[] lastPressed = new boolean[]{false, false};
 
-    Servo grabber;
+    Servo arm1, arm2;
 
     @Override
     public void init() {
-        grabber = hardwareMap.servo.get("grabber");
-        grabber.setPosition(0);
+        arm1 = hardwareMap.servo.get("arm1");
+        arm2 = hardwareMap.servo.get("arm2");
+
+        arm1.setPosition(1);
+        arm2.setPosition(0);
 
         // Get the hardware from the robot configuration
         motors[0] = hardwareMap.dcMotor.get("Lwheel1");
@@ -79,27 +82,18 @@ public class FxDTeleop extends OpMode {
         else {
             lifter.setPower(0);
         }
+        //endregion
 
-
+        //region Flipper Movement
         if(gamepad2.a) {
-            grabber.setPosition(0);
+            arm1.setPosition(0.45);
+            arm2.setPosition(0.55);
         }
         else {
-            grabber.setPosition(0.5);
+            arm1.setPosition(1);
+            arm2.setPosition(0);
         }
-
-//        float grabberPower = 1f;
-//        CRServo grabber = hardwareMap.crservo.get("grabber");
-//        grabber.resetDeviceConfigurationForOpMode();
-//        if(gamepad2.a) {
-//            // OPEN
-//            grabber.setPower(grabberPower);
-//        }
-//        else {
-//            // CLOSE
-//            grabber.setPower(-grabberPower);
-//        }
-        //endregion
+        //enderegion
 
         // Update states
         lastPressed[0] = gamepad1.left_bumper || gamepad1.right_bumper;
